@@ -1,13 +1,15 @@
-const post = require('../models/post');
+const Post = require('../models/post');
 const { body, validationResult } = require('express-validator');
 
-//Only have to implement this function once per project
-exports.index = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Site Home Page');
-};
-
-exports.postList = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post List');
+exports.index = async (req, res, next) => {
+  try{
+    const posts = await Post.find({}).select('post time user').lean().sort({time:-1}).exec();
+    return res.render('index',{
+      posts
+    });
+  }catch(err){
+    return next(err);
+  }
 };
 
 exports.postDetail = (req, res, next) => {
