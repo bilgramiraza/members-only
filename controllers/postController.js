@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 
 exports.index = async (req, res, next) => {
   try{
-    const posts = await Post.find({}).select('post time user').lean().sort({time:-1}).exec();
+    const posts = await Post.find({}).select('post time user').lean().sort({time:1}).exec();
     return res.render('index',{
       posts
     });
@@ -16,8 +16,25 @@ exports.postCreateGet = (req, res, next) => {
   res.render('postForm',{type:'Creation'});
 };
 
-exports.postCreatePost = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Create POST');
+exports.postCreatePost = async(req, res, next) => {
+  const {post} = req.body;
+  if(req.errorObject){
+    return res.render('postForm',{
+      type:'Creation',
+      post,
+      errors:req.errorObject,
+    });
+  }
+  const postObject = new Post({
+    post,
+    user:'6461c81664053c0a7bac2106',
+  });
+  try{
+    await postObject.save();
+    return res.redirect('/');
+  }catch(err){
+    return next(err);
+  }
 };
 
 exports.postDeleteGet = (req, res, next) => {

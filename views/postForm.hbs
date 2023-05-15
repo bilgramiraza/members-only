@@ -7,8 +7,10 @@
       name="post"
       class=""
       rows="5"
-      >
-    </textarea>
+      >{{#if post}}{{post}}{{/if}}</textarea>
+    {{#if errors}}
+      <span>{{errors}}</span>
+    {{/if}}
     <button type="submit">Submit</button>
   </form>
 </main>
