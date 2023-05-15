@@ -13,7 +13,7 @@ exports.index = async (req, res, next) => {
 };
 
 exports.postCreateGet = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Create GET');
+  res.render('postForm',{type:'Creation'});
 };
 
 exports.postCreatePost = (req, res, next) => {
