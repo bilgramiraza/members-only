@@ -62,8 +62,22 @@ exports.postDeletePost = async(req, res, next) => {
   }
 };
 
-exports.postUpdateGet = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Update GET');
+exports.postUpdateGet = async (req, res, next) => {
+  try{
+    const post = await Post.findById(req.params.id).lean().exec();
+    if(!post){
+      const err = new Error('Post Not Found');
+      err.status = 404;
+      return next(err);
+    }
+
+    return res.render('postForm',{
+      type:'Update',
+      ...post,
+    });
+  }catch(err){
+    return next(err);
+  }
 };
 
 exports.postUpdatePost = (req, res, next) => {
