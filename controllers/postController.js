@@ -37,8 +37,17 @@ exports.postCreatePost = async(req, res, next) => {
   }
 };
 
-exports.postDeleteGet = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Delete GET');
+exports.postDeleteGet = async (req, res, next) => {
+  try{
+    const post = await Post.findById(req.params.id).select('post time user').lean().exec();
+    if(!post) return res.redirect('/');
+
+    return res.render('postDelete',{
+      ...post
+    });
+  }catch(err){
+    return next(err);
+  }
 };
 
 exports.postDeletePost = (req, res, next) => {

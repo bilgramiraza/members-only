@@ -1,0 +1,15 @@
+<main>
+  <h2>Post Deletion</h2>
+  <section>
+    <article>
+      <p>{{post}}</p>
+      <span>by <em>{{user}}</em> on <em>{{time}}</em></span>
+    </article>
+    <p>Confirm Deletion of post</p>
+    <form action="" method="POST" novalidate>
+      <input type="hidden" name="postId" value="{{_id}}" required="true">
+      <button type="submit">Delete</button>
+    </form>
+    <a href="/">Cancel</a>
+  </section>
+</main>
