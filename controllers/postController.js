@@ -80,6 +80,20 @@ exports.postUpdateGet = async (req, res, next) => {
   }
 };
 
-exports.postUpdatePost = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Update POST');
+exports.postUpdatePost = async (req, res, next) => {
+  const {newPost} = req.body;
+  if(!req.errorObject){
+    return res.render('postForm',{
+      type:'Update',
+      post:newPost,
+      errors:req.errorObject,
+    });
+  }
+  try{
+    await Post.findOneAndUpdate(req.params.id,{newPost},{new:true, lean:true});
+
+    return res.redirect('/');
+  }catch(err){
+    return next(err);
+  }
 };
