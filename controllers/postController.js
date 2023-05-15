@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 
 exports.index = async (req, res, next) => {
   try{
-    const posts = await Post.find({}).select('post time user').lean().sort({time:1}).exec();
+    const posts = await Post.find({}).select('post time user').lean().sort({time:-1}).exec();
     return res.render('index',{
       posts
     });
@@ -50,8 +50,16 @@ exports.postDeleteGet = async (req, res, next) => {
   }
 };
 
-exports.postDeletePost = (req, res, next) => {
-  res.send('NOT IMPLEMENTED: post Delete POST');
+exports.postDeletePost = async(req, res, next) => {
+  try{
+    const post = await Post.findById(req.body.postId).lean().exec();
+    if(!post) return res.redirect('/');
+
+    await Post.findOneAndDelete(req.body.postId);
+    return res.redirect('/');
+  }catch(err){
+    return next(err);
+  }
 };
 
 exports.postUpdateGet = (req, res, next) => {
