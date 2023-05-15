@@ -12,10 +12,6 @@ exports.index = async (req, res, next) => {
   }
 };
 
-exports.postDetail = (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: post Detail ${req.params.id}`);
-};
-
 exports.postCreateGet = (req, res, next) => {
   res.send('NOT IMPLEMENTED: post Create GET');
 };

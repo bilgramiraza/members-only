@@ -19,7 +19,4 @@ router.post('/post/:id/delete', postController.postDeletePost);
 router.get('/post/:id/update', postController.postUpdateGet);
 router.post('/post/:id/update', postController.postUpdatePost);
 
-//Post Details Page
-router.get('/post/:id', postController.postDetail);
-
 module.exports = router;

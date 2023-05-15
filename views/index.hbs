@@ -1,2 +1,9 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<main>
+  <h2>Members Only</h2>
+  <section>
+    {{#each posts}}
+      <p>{{this.post}}</p>
+      <span>by <em>{{this.user}}</em> on <em>{{this.time}}</em></span>
+    {{/each}}
+  </section>
+</main>
