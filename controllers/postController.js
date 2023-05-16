@@ -1,5 +1,4 @@
 const Post = require('../models/post');
-const { body, validationResult } = require('express-validator');
 
 exports.index = async (req, res, next) => {
   try{
