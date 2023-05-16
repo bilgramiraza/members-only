@@ -3,7 +3,11 @@
   <section>
     {{#each posts}}
       <p>{{this.post}}</p>
-      <span>by <em>{{this.user}}</em> on <em>{{this.time}}</em></span>
+      {{#if this.modified}}
+        <span>by <em>{{this.user}}</em> on <em>{{this.time}}*</em></span>
+      {{else}}
+        <span>by <em>{{this.user}}</em> on <em>{{this.time}}</em></span>
+      {{/if}}
     {{/each}}
   </section>
 </main>

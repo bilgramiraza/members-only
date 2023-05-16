@@ -2,7 +2,7 @@ const Post = require('../models/post');
 
 exports.index = async (req, res, next) => {
   try{
-    const posts = await Post.find({}).select('post time user').lean().sort({time:-1}).exec();
+    const posts = await Post.find({}).select('post time user modified').lean().sort({time:-1}).exec();
     return res.render('index',{
       posts
     });
@@ -38,7 +38,7 @@ exports.postCreatePost = async(req, res, next) => {
 
 exports.postDeleteGet = async (req, res, next) => {
   try{
-    const post = await Post.findById(req.params.id).select('post time user').lean().exec();
+    const post = await Post.findById(req.params.id).select('post time user modified').lean().exec();
     if(!post) return res.redirect('/');
 
     return res.render('postDelete',{
@@ -89,7 +89,12 @@ exports.postUpdatePost = async (req, res, next) => {
     });
   }
   try{
-    await Post.findByIdAndUpdate(req.params.id,{post},{new:true, lean:true});
+    const postObject = {
+      post,
+      time:Date.now(),
+      modified:true,
+    };
+    await Post.findByIdAndUpdate(req.params.id, postObject, {new:true, lean:true});
      
     return res.redirect('/');
   }catch(err){

@@ -3,7 +3,11 @@
   <section>
     <article>
       <p>{{post}}</p>
-      <span>by <em>{{user}}</em> on <em>{{time}}</em></span>
+      {{#if modified}}
+        <span>by <em>{{user}}</em> on <em>{{time}}*</em></span>
+      {{else}}
+        <span>by <em>{{user}}</em> on <em>{{time}}</em></span>
+      {{/if}}
     </article>
     <p>Confirm Deletion of post</p>
     <form action="" method="POST" novalidate>
