@@ -54,7 +54,7 @@ exports.postDeletePost = async(req, res, next) => {
     const post = await Post.findById(req.body.postId).lean().exec();
     if(!post) return res.redirect('/');
 
-    await Post.findOneAndDelete(req.body.postId);
+    await Post.findByIdAndDelete(req.body.postId);
     return res.redirect('/');
   }catch(err){
     return next(err);
@@ -80,17 +80,17 @@ exports.postUpdateGet = async (req, res, next) => {
 };
 
 exports.postUpdatePost = async (req, res, next) => {
-  const {newPost} = req.body;
-  if(!req.errorObject){
+  const {post} = req.body;
+  if(req.errorObject){
     return res.render('postForm',{
       type:'Update',
-      post:newPost,
+      post,
       errors:req.errorObject,
     });
   }
   try{
-    await Post.findOneAndUpdate(req.params.id,{newPost},{new:true, lean:true});
-
+    await Post.findByIdAndUpdate(req.params.id,{post},{new:true, lean:true});
+     
     return res.redirect('/');
   }catch(err){
     return next(err);
