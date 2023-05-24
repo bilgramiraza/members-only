@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const exphbs  = require('express-handlebars');
 require('./configs/mongoose-config');
+const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -28,6 +29,12 @@ app.engine('hbs', exphbs.engine({
       }
     },
   */},
+}));
+
+app.use(session({
+  secret:'membersOnly',
+  resave: false,
+  saveUninitialized: true,
 }));
 
 app.use(logger('dev'));
