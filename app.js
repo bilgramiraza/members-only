@@ -3,20 +3,13 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-require('dotenv').config();
-const mongoose = require('mongoose');
 const exphbs  = require('express-handlebars');
+require('./configs/mongoose-config');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-
-const mongodbURI = process.env.MONGODB_URI;
-const mongodbParams = { useNewUrlParser: true, useUnifiedTopology: true };
-mongoose.connect(mongodbURI, mongodbParams);
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB Connection Error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
