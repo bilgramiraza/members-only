@@ -6,6 +6,8 @@ const logger = require('morgan');
 const exphbs  = require('express-handlebars');
 require('./configs/mongoose-config');
 const session = require('express-session');
+const passport = require('passport');
+require('./configs/passport-config');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -36,6 +38,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(express.json());
