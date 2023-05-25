@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 exports.signUpGet= (req, res, next) => {
   return res.render('signUp');
@@ -32,10 +33,17 @@ exports.signUpPost= async (req, res, next) => {
   }
 };
 
-exports.loginGet= (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Login Get Page');
+exports.loginGet= (req, res) => {
+  if(req.isAuthenticated()) return res.redirect('/');
+  return res.render('login');  
 };
 
-exports.loginPost= (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Login Post Page');
+exports.loginPost= passport.authenticate('local', {
+  failureRedirect:'/login', 
+  successRedirect:'/'
+});
+
+exports.logout = (req, res)=>{
+  req.logout();
+  res.redirect('/');
 };
