@@ -1,6 +1,6 @@
 <main>
   <h2>Sign Up</h2>
-  <form action="" method="POST" novalidate>
+  <form action="/user/sign-up" method="POST" novalidate>
    <label for="username">Username</label>
    <input id="username" name="username" value="{{username}}" type="text">
    <label for="firstName">First Name</label>
@@ -11,5 +11,6 @@
    <input id="password" name="password" value="{{password}}" type="password">
    <label for="passwordConfirm">Confirm Password</label>
    <input id="passwordConfirm" name="passwordConfirm" type="password">
+    <button type="submit">Login</button>
   </form>
 </main>

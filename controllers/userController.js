@@ -47,7 +47,7 @@ exports.loginPost= (req, res, next)=>{
     });
   }
 
-  passport.authenticate('local', async(err, user, info)=>{
+  passport.authenticate('local', (err, user, info)=>{
     if(err) return next(err);
     if(!user){
       res.render('login',{
@@ -57,12 +57,16 @@ exports.loginPost= (req, res, next)=>{
         }, 
       });
     }
-    await req.login(user)
-    return res.redirect('/');
+    req.login(user, function(err){
+      if(err) return next(err);
+      return res.redirect('/');
+    });
   })(req, res, next);
 };
 
 exports.logout = (req, res)=>{
-  req.logout();
-  res.redirect('/');
+  req.logout(function (err){
+    if(err) return next(err);
+    return res.redirect('/');
+  });
 };

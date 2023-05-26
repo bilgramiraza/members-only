@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 const verifyCallback = async (username, password, done)=>{
   try{
-    const foundUser = await User.fineOne({username}).lean();
+    const foundUser = await User.findOne({username}).lean();
     if(!foundUser) return done(null, false, {field:'username' ,msg:'User not found'});
 
     const passwordCompare = await bcrypt.compare(password, foundUser.password);
@@ -21,11 +21,11 @@ const strategy = new LocalStrategy(verifyCallback);
 
 passport.use(strategy);
 
-passport.serializeUser((user, done)=>{
-  done(null, user.id);
+passport.serializeUser(function(user, done){
+  done(null, user._id);
 });
 
-passport.deserializeUser(async (userId, done)=>{
+passport.deserializeUser(async function (userId, done){
   try{
     const user = await User.findById(userId).lean();
     return done(null, user);
