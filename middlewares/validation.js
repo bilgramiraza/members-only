@@ -14,7 +14,7 @@ function validationObject(req, res, next){
 
 module.exports.isAuth = (req, res, next)=>{
   if(req.isAuthenticated()) next();
-  else  res.render('login');
+  else  res.redirect('/user/login');
 };
 
 const duplicateUserCheck = async (value)=>{
