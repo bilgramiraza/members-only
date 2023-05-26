@@ -38,3 +38,9 @@ exports.signUpValidation = [
   body('passwordConfirm', 'Password Cannot be Blank').trim().isLength({min:8}).custom(confirmPassword).escape(),
   validationObject,
 ];
+
+exports.loginValidation = [
+  body('username', 'Username Cannot be Blank').trim().isLength({min:1}).escape(),
+  body('password', 'Password Cannot be Blank').trim().isLength({min:8}).escape(),
+  validationObject,
+];

@@ -38,10 +38,29 @@ exports.loginGet= (req, res) => {
   return res.render('login');  
 };
 
-exports.loginPost= passport.authenticate('local', {
-  failureRedirect:'/login', 
-  successRedirect:'/'
-});
+exports.loginPost= (req, res, next)=>{
+  const { username } = req.body;
+  if(req.errorObject){
+    return res.render('login',{
+      username,
+      errors:req.errorObject,
+    });
+  }
+
+  passport.authenticate('local', async(err, user, info)=>{
+    if(err) return next(err);
+    if(!user){
+      res.render('login',{
+        username,
+        errors:{
+         [info.field]:info.msg, 
+        }, 
+      });
+    }
+    await req.login(user)
+    return res.redirect('/');
+  })(req, res, next);
+};
 
 exports.logout = (req, res)=>{
   req.logout();
