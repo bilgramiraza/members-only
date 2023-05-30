@@ -4,7 +4,8 @@ exports.index = async (req, res, next) => {
   try{
     const posts = await Post.find({}).select('post time user modified').lean().sort({time:-1}).exec();
     return res.render('index',{
-      posts
+      posts,
+      currentUser:req?.user?.firstName,
     });
   }catch(err){
     return next(err);
@@ -12,7 +13,10 @@ exports.index = async (req, res, next) => {
 };
 
 exports.postCreateGet = (req, res, next) => {
-  res.render('postForm',{type:'Creation'});
+  res.render('postForm',{
+    type:'Creation',
+    currentUser:req?.user?.firstName,
+  });
 };
 
 exports.postCreatePost = async(req, res, next) => {
@@ -20,13 +24,14 @@ exports.postCreatePost = async(req, res, next) => {
   if(req.errorObject){
     return res.render('postForm',{
       type:'Creation',
+      currentUser:req?.user?.firstName,
       post,
       errors:req.errorObject,
     });
   }
   const postObject = new Post({
     post,
-    user:'6461c81664053c0a7bac2106',
+    user:req.user._id,
   });
   try{
     await postObject.save();
@@ -42,7 +47,8 @@ exports.postDeleteGet = async (req, res, next) => {
     if(!post) return res.redirect('/');
 
     return res.render('postDelete',{
-      ...post
+      ...post,
+      currentUser:req?.user?.firstName,
     });
   }catch(err){
     return next(err);
@@ -72,6 +78,7 @@ exports.postUpdateGet = async (req, res, next) => {
 
     return res.render('postForm',{
       type:'Update',
+      currentUser:req?.user?.firstName,
       ...post,
     });
   }catch(err){
@@ -84,6 +91,7 @@ exports.postUpdatePost = async (req, res, next) => {
   if(req.errorObject){
     return res.render('postForm',{
       type:'Update',
+      currentUser:req?.user?.firstName,
       post,
       errors:req.errorObject,
     });

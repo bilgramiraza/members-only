@@ -4,13 +4,16 @@ const passport = require('passport');
 
 exports.signUpGet= (req, res) => {
   if(req.isAuthenticated()) return res.redirect('/');
-  return res.render('signUp');
+  return res.render('signUp',{
+    currentUser:req?.user?.firstName,
+  });
 };
 
 exports.signUpPost= async (req, res, next) => {
   const {username, firstName, lastName, password} = req.body;
   if(req.errorObject){
     return res.render('signUp',{
+      currentUser:req?.user?.firstName,
       username,
       firstName,
       lastName,
@@ -36,13 +39,16 @@ exports.signUpPost= async (req, res, next) => {
 
 exports.loginGet= (req, res) => {
   if(req.isAuthenticated()) return res.redirect('/');
-  return res.render('login');  
+  return res.render('login',{
+    currentUser:req?.user?.firstName,
+  });  
 };
 
 exports.loginPost= (req, res, next)=>{
   const { username } = req.body;
   if(req.errorObject){
     return res.render('login',{
+      currentUser:req?.user?.firstName,
       username,
       errors:req.errorObject,
     });
@@ -52,6 +58,7 @@ exports.loginPost= (req, res, next)=>{
     if(err) return next(err);
     if(!user){
       res.render('login',{
+        currentUser:req?.user?.firstName,
         username,
         errors:{
          [info.field]:info.msg, 

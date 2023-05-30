@@ -2,12 +2,23 @@
   <h2>Members Only</h2>
   <section>
     {{#each posts}}
-      <p>{{this.post}}</p>
-      {{#if this.modified}}
-        <span>by <em>{{this.user}}</em> on <em>{{this.time}}*</em></span>
-      {{else}}
-        <span>by <em>{{this.user}}</em> on <em>{{this.time}}</em></span>
-      {{/if}}
+      <div>
+        <p>{{this.post}}</p>
+        <p>
+          <span>by</span>
+          {{#if currentUser}}
+            <em>{{this.user}}</em>
+          {{else}}
+            <em>Login to See</em>
+          {{/if}}
+          <span> on </span>
+          {{#if this.modified}}
+            <em>{{this.time}}*</em>
+          {{else}}
+            <em>{{this.time}}</em>
+          {{/if}}
+        </p>
+      </div>
     {{/each}}
   </section>
 </main>
