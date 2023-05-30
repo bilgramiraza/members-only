@@ -28,7 +28,7 @@ exports.signUpPost= async (req, res, next) => {
       lastName,
     });
     await user.save();
-    return res.redirect('/');
+    return res.redirect('/user/login');
   }catch(err){
     return next(err);
   }

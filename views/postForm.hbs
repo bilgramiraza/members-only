@@ -1,16 +1,7 @@
 <main>
   <h2>{{type}}</h2>
   <form action="" method="POST" novalidate>
-    <label>Enter Message</label>
-    <textarea
-      id="post"
-      name="post"
-      class=""
-      rows="5"
-      >{{#if post}}{{post}}{{/if}}</textarea>
-    {{#if errors}}
-      <span>{{errors}}</span>
-    {{/if}}
+    {{> textAreaField id="post" label="Enter Message" value=post error=errors.post}}
     <button type="submit">Submit</button>
   </form>
 </main>

@@ -1,16 +1,11 @@
 <main>
   <h2>Sign Up</h2>
   <form action="/user/sign-up" method="POST" novalidate>
-   <label for="username">Username</label>
-   <input id="username" name="username" value="{{username}}" type="text">
-   <label for="firstName">First Name</label>
-   <input id="firstName" name="firstName" value="{{firstName}}" type="text">
-   <label for="lastName">Last Name</label>
-   <input id="lastName" name="lastName" value="{{lastName}}" type="text">
-   <label for="password">Password</label>
-   <input id="password" name="password" value="{{password}}" type="password">
-   <label for="passwordConfirm">Confirm Password</label>
-   <input id="passwordConfirm" name="passwordConfirm" type="password">
+    {{> inputField id="username" label="Username" type="text" value=username error=errors.username}}
+    {{> inputField id="firstName" label="First Name" type="text" value=firstName error=errors.firstName}}
+    {{> inputField id="lastName" label="Last Name" type="text" value=lastName error=errors.lastName}}
+    {{> inputField id="password" label="Password" type="password" error=errors.password}}
+    {{> inputField id="passwordConfirm" label="Confirm Password" type="password" error=errors.passwordConfirm}}
     <button type="submit">Login</button>
   </form>
 </main>

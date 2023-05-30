@@ -1,10 +1,8 @@
 <main>
   <h2>Login Page</h2>
   <form action="/user/login" method="POST" novalidate>
-    <label for="username">Username</label>
-    <input id="username" name="username" value="{{username}}" type="text">
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password">
+    {{> inputField id="username" label="Username" type="text" value=username error=errors.username}}
+    {{> inputField id="password" label="Password" type="password" error=errors.password}}
     <button type="submit">Login</button>
   </form>
 </main>
