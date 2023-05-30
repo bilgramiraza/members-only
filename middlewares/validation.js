@@ -12,7 +12,7 @@ function validationObject(req, res, next){
   return next();
 }
 
-module.exports.isAuth = (req, res, next)=>{
+const isAuth = (req, res, next)=>{
   if(req.isAuthenticated()) next();
   else  res.redirect('/user/login');
 };
@@ -25,12 +25,12 @@ const duplicateUserCheck = async (value)=>{
 
 const confirmPassword = (value, { req })=> value === req.body.password;
 
-exports.postValidation = [
+const postValidation = [
   body('post', 'Post Cannot be Blank').trim().isLength({min:1}).escape(),
   validationObject,
 ];
 
-exports.signUpValidation = [
+const signUpValidation = [
   body('username', 'Username Cannot be Blank').trim().isLength({min:1}).escape().custom(duplicateUserCheck),
   body('firstName', 'First Name Cannot be Blank').trim().isLength({min:1}).escape(),
   body('lastName', 'Last Name Cannot be Blank').trim().isLength({min:1}).escape(),
@@ -39,8 +39,15 @@ exports.signUpValidation = [
   validationObject,
 ];
 
-exports.loginValidation = [
+const loginValidation = [
   body('username', 'Username Cannot be Blank').trim().isLength({min:1}).escape(),
   body('password', 'Password Cannot be Blank').trim().isLength({min:8}).withMessage('Password too Short').escape(),
   validationObject,
 ];
+
+module.exports = {
+  isAuth,
+  postValidation,
+  signUpValidation,
+  loginValidation,
+};
