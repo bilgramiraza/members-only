@@ -1,0 +1,10 @@
+<nav>
+  {{#if currentUser}}
+    <span>Welcome, {{currentUser}}<span>
+    <a href="/post/create">Create Post</a>
+    <a href="/user/logout">LogOut</a>
+  {{else}}
+    <a href="/user/login">Login</a>
+    <a href="/user/sign-up">SignUp</a>
+  {{/if}}
+</nav>
