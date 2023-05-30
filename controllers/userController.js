@@ -2,14 +2,14 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-exports.signUpGet= (req, res) => {
+const signUpGet= (req, res)=>{
   if(req.isAuthenticated()) return res.redirect('/');
   return res.render('signUp',{
     currentUser:req?.user?.firstName,
   });
 };
 
-exports.signUpPost= async (req, res, next) => {
+const signUpPost= async (req, res, next)=>{
   const {username, firstName, lastName, password} = req.body;
   if(req.errorObject){
     return res.render('signUp',{
@@ -37,14 +37,14 @@ exports.signUpPost= async (req, res, next) => {
   }
 };
 
-exports.loginGet= (req, res) => {
+const loginGet= (req, res)=>{
   if(req.isAuthenticated()) return res.redirect('/');
   return res.render('login',{
     currentUser:req?.user?.firstName,
   });  
 };
 
-exports.loginPost= (req, res, next)=>{
+const loginPost= (req, res, next)=>{
   const { username } = req.body;
   if(req.errorObject){
     return res.render('login',{
@@ -72,9 +72,17 @@ exports.loginPost= (req, res, next)=>{
   })(req, res, next);
 };
 
-exports.logout = (req, res)=>{
+const logout = (req, res)=>{
   req.logout(function (err){
     if(err) return next(err);
     return res.redirect('/');
   });
+};
+
+module.exports = {
+  signUpGet,
+  signUpPost,
+  loginGet,
+  loginPost,
+  logout,
 };

@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 
-exports.index = async (req, res, next) => {
+const index = async (req, res, next) => {
   try{
     const posts = await Post.find({}).select('post time user modified').lean().sort({time:-1}).exec();
     return res.render('index',{
@@ -12,14 +12,14 @@ exports.index = async (req, res, next) => {
   }
 };
 
-exports.postCreateGet = (req, res, next) => {
+const postCreateGet = (req, res, next) => {
   res.render('postForm',{
     type:'Creation',
     currentUser:req?.user?.firstName,
   });
 };
 
-exports.postCreatePost = async(req, res, next) => {
+const postCreatePost = async(req, res, next) => {
   const {post} = req.body;
   if(req.errorObject){
     return res.render('postForm',{
@@ -41,7 +41,7 @@ exports.postCreatePost = async(req, res, next) => {
   }
 };
 
-exports.postDeleteGet = async (req, res, next) => {
+const postDeleteGet = async (req, res, next) => {
   try{
     const post = await Post.findById(req.params.id).select('post time user modified').lean().exec();
     if(!post) return res.redirect('/');
@@ -55,7 +55,7 @@ exports.postDeleteGet = async (req, res, next) => {
   }
 };
 
-exports.postDeletePost = async(req, res, next) => {
+const postDeletePost = async(req, res, next) => {
   try{
     const post = await Post.findById(req.body.postId).lean().exec();
     if(!post) return res.redirect('/');
@@ -67,7 +67,7 @@ exports.postDeletePost = async(req, res, next) => {
   }
 };
 
-exports.postUpdateGet = async (req, res, next) => {
+const postUpdateGet = async (req, res, next) => {
   try{
     const post = await Post.findById(req.params.id).lean().exec();
     if(!post){
@@ -86,7 +86,7 @@ exports.postUpdateGet = async (req, res, next) => {
   }
 };
 
-exports.postUpdatePost = async (req, res, next) => {
+const postUpdatePost = async (req, res, next) => {
   const {post} = req.body;
   if(req.errorObject){
     return res.render('postForm',{
@@ -108,4 +108,14 @@ exports.postUpdatePost = async (req, res, next) => {
   }catch(err){
     return next(err);
   }
+};
+
+module.exports = {
+  index,
+  postCreateGet,
+  postCreatePost,
+  postDeleteGet,
+  postDeletePost,
+  postUpdateGet,
+  postUpdatePost,
 };
