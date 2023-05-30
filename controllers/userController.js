@@ -2,7 +2,8 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-exports.signUpGet= (req, res, next) => {
+exports.signUpGet= (req, res) => {
+  if(req.isAuthenticated()) return res.redirect('/');
   return res.render('signUp');
 };
 

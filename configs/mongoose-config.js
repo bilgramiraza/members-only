@@ -6,5 +6,3 @@ const mongodbParams = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.connect(mongodbURI, mongodbParams);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB Connection Error:'));
-
-module.exports = db;
