@@ -13,6 +13,10 @@ router.post('/sign-up', signUpValidation, userController.signUpPost);
 router.get('/login', userController.loginGet);
 router.post('/login', loginValidation, userController.loginPost);
 
+//Account Level Escalation Route
+router.get('/admin', isAuth, userController.adminGet);
+router.post('/admin', isAuth, userController.adminPost);
+
 //User Logout Route
 router.get('/logout', userController.logout);
 

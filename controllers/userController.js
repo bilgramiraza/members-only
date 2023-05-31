@@ -46,11 +46,11 @@ const loginGet= (req, res)=>{
 
 const loginPost= (req, res, next)=>{
   const { username } = req.body;
-  if(req.errorObject){
+  if(req.errorobject){
     return res.render('login',{
-      currentUser:req?.user?.firstName,
+      currentuser:req?.user?.firstname,
       username,
-      errors:req.errorObject,
+      errors:req.errorobject,
     });
   }
 
@@ -72,6 +72,31 @@ const loginPost= (req, res, next)=>{
   })(req, res, next);
 };
 
+const adminGet = (req, res)=>{
+  return res.render('accountEscalation',{
+    currentUser:req?.user?.firstName,
+  });
+};
+
+const adminPost = async(req, res, next)=>{
+  const { password } = req.body;
+  if(req.errorobject){
+    return res.render('accountEscalation',{
+      currentUser:req?.user?.firstname,
+      password,
+      errors:req.errorobject,
+    });
+  }
+
+  try{
+    const adminUser = await User.findByIdAndUpdate(req.user._id, { isAdmin:true }, { new:true, lean:true });
+    req.user.isAdmin = true;
+    return res.redirect('/');
+  }catch(err){
+    return next(err);
+  }
+};
+
 const logout = (req, res)=>{
   req.logout(function (err){
     if(err) return next(err);
@@ -84,5 +109,7 @@ module.exports = {
   signUpPost,
   loginGet,
   loginPost,
+  adminGet,
+  adminPost,
   logout,
 };
