@@ -1,8 +1,12 @@
 <nav>
   {{#if currentUser}}
     <span>Welcome, {{currentUser}}<span>
+    {{#if isAdmin}}<span>(ADMINISTRATOR)</span>{{/if}}
     <a href="/post/create">Create Post</a>
     <a href="/user/logout">LogOut</a>
+    {{#unless isAdmin}}
+      <a href="/user/admin">Account Escalation</a>
+    {{/unless}}
   {{else}}
     <a href="/user/login">Login</a>
     <a href="/user/sign-up">SignUp</a>

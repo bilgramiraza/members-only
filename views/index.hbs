@@ -18,6 +18,10 @@
             <em>{{this.time}}</em>
           {{/if}}
         </p>
+        {{#if ../isAdmin}}
+          <a>Update</a>
+          <a>Delete</a>
+        {{/if}}
       </div>
     {{/each}}
   </section>
