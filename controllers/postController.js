@@ -6,6 +6,7 @@ const index = async (req, res, next) => {
     return res.render('index',{
       posts,
       currentUser:req?.user?.firstName,
+      isAdmin:req?.user?.isAdmin,
     });
   }catch(err){
     return next(err);

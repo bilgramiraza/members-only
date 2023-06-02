@@ -89,8 +89,7 @@ const adminPost = async(req, res, next)=>{
   }
 
   try{
-    const adminUser = await User.findByIdAndUpdate(req.user._id, { isAdmin:true }, { new:true, lean:true });
-    req.user.isAdmin = true;
+    await User.findByIdAndUpdate(req.user._id, { isAdmin:true }, { new:true, lean:true });
     return res.redirect('/');
   }catch(err){
     return next(err);
