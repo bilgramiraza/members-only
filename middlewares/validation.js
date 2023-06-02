@@ -13,17 +13,23 @@ function validationObject(req, res, next){
 }
 
 const isAuth = (req, res, next)=>{
-  if(req.isAuthenticated()) next();
-  else  res.redirect('/user/login');
+  if(req.isAuthenticated()) return next();
+  return res.redirect('/user/login');
 };
 
 const duplicateUserCheck = async (value)=>{
   const foundUser = await User.exists({username:value});
-  if(foundUser) return Promise.reject('User Already Exists. Please Choose a new username');
+  if(foundUser) throw new Error('User Already Exists. Please Choose a new username');
   return true;
 };
 
 const confirmPassword = (value, { req })=> value === req.body.password;
+
+const adminPasswordCheck = (value)=>{
+  if(value !== process.env.ADMIN_CODE) throw new Error('Invalid Password');
+  console.log('Illegal Access');
+  return true;
+}
 
 const postValidation = [
   body('post', 'Post Cannot be Blank').trim().isLength({min:1}).escape(),
@@ -45,9 +51,15 @@ const loginValidation = [
   validationObject,
 ];
 
+const adminValidation = [
+  body('password', 'Password Cannot be Blank').trim().isLength({min:8}).withMessage('Password too Short').escape().custom(adminPasswordCheck),
+  validationObject,
+];
+
 module.exports = {
   isAuth,
   postValidation,
   signUpValidation,
   loginValidation,
+  adminValidation,
 };

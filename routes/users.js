@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require('../controllers/userController');
-const { signUpValidation, loginValidation ,isAuth} = require('../middlewares/validation');
+const { signUpValidation, loginValidation ,isAuth ,adminValidation} = require('../middlewares/validation');
 
 //USER ROUTES //
 //User Sign up Route
@@ -15,7 +15,7 @@ router.post('/login', loginValidation, userController.loginPost);
 
 //Account Level Escalation Route
 router.get('/admin', isAuth, userController.adminGet);
-router.post('/admin', isAuth, userController.adminPost);
+router.post('/admin', isAuth, adminValidation, userController.adminPost);
 
 //User Logout Route
 router.get('/logout', userController.logout);
