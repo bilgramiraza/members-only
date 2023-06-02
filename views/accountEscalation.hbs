@@ -1,7 +1,7 @@
 <main>
   <h2>Account Escalation Page</h2>
   <p>Enter the <strong>Admin Password</strong> to escalate the Account Privilege of <em>{{currentUser}}</em> to <strong>Admin</strong> Level</p>
-  <form action="/user/login" method="POST" novalidate>
+  <form action="/user/admin" method="POST" novalidate>
     {{> inputField id="password" label="Password" type="password" error=errors.password}}
     <button type="submit">Escalate</button>
   </form>
