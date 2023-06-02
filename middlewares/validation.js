@@ -17,6 +17,14 @@ const isAuth = (req, res, next)=>{
   return res.redirect('/user/login');
 };
 
+const isAdmin =[
+  isAuth,
+  (req, res, next)=>{
+    if(req?.user.isAdmin)  return next();
+    return res.redirect('/user/admin');
+  }
+];
+
 const duplicateUserCheck = async (value)=>{
   const foundUser = await User.exists({username:value});
   if(foundUser) throw new Error('User Already Exists. Please Choose a new username');
@@ -58,6 +66,7 @@ const adminValidation = [
 
 module.exports = {
   isAuth,
+  isAdmin,
   postValidation,
   signUpValidation,
   loginValidation,
