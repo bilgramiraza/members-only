@@ -19,8 +19,8 @@
           {{/if}}
         </p>
         {{#if ../isAdmin}}
-          <a>Update</a>
-          <a>Delete</a>
+          <a href="/post/{{this._id}}/update">Update</a>
+          <a href="/post/{{this._id}}/delete">Delete</a>
         {{/if}}
       </div>
     {{/each}}
